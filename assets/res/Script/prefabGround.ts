@@ -1,5 +1,6 @@
 import { _decorator, Canvas, Component, director, Node, UITransform, Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
+import { GameControl } from './GameControl';
 
 @ccclass('prefr')
 export class prefr extends Component {
@@ -22,8 +23,9 @@ export class prefr extends Component {
     public bgVT1 = new Vec3;
     public bgVT2 = new Vec3;
 
-    // toc do basegroud
-    public bgSpeed: number = 50;
+    // toc do baseground
+    public gameControlSpeed = new GameControl;
+    public bgSpeed: number;
 
     onLoad(): void {
 
@@ -45,6 +47,10 @@ export class prefr extends Component {
 
 
     update(deltaTime: number) {
+        
+        //lay game speed tu GameControl
+        this.bgSpeed = this.gameControlSpeed.speed;
+        
         //lay vi tri 2 basegound
         this.bgVT1 = this.baseground1.position;
         this.bgVT2 = this.baseground2.position;
