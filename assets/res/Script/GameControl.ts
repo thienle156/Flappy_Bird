@@ -1,4 +1,4 @@
-import { _decorator, CCInteger, Component, EventKeyboard, input, Input, KeyCode, director } from 'cc';
+import { _decorator, CCInteger, Component, EventKeyboard, input, Input, KeyCode, director, NodeEventType } from 'cc';
 import { prefr } from './prefabGround';
 import { Result } from './Results';
 import { Bird } from './Bird';
@@ -41,6 +41,12 @@ export class GameControl extends Component {
     initListerner(){
 
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+
+        this.node.on(NodeEventType.TOUCH_START,() =>{
+
+            this.bird.fly();
+        }
+        , this)
     }
 
     onKeyDown(event: EventKeyboard){
@@ -57,6 +63,7 @@ export class GameControl extends Component {
 
             case KeyCode.KEY_R :
                 this.resetGame();
+                this.bird.resetBird();
                 break;
 
         }
