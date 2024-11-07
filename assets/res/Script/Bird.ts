@@ -7,17 +7,18 @@ export class Bird extends Component {
     @property({
         type: CCFloat
     })
-    public jumpHeight: number = 2;
+    public jumpHeight: number = 3.5;
 
     @property({
         type: CCFloat
     })
-    public jumpDuration: number = 2;
+    public jumpDuration: number = 3.5;
 
 
     
     public birdAnimation: Animation;
     public birdLocation = new Vec3;
+    public hitSomething : boolean;
 
     onLoad(){
 
@@ -30,6 +31,7 @@ export class Bird extends Component {
 
         this.birdLocation = new Vec3(0,0,0);
         this.node.setPosition(this.birdLocation);
+        this.hitSomething = false;
     }
 
     fly(){
