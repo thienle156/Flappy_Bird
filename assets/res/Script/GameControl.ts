@@ -2,7 +2,8 @@ import { _decorator, CCInteger, Component, EventKeyboard, input, Input, KeyCode,
 import { prefr } from './prefabGround';
 import { Result } from './Results';
 import { Bird } from './Bird';
-import { PipePool } from './PipePool'
+import { PipePool } from './PipePool';
+import { Audio } from './Audio';
 
 const { ccclass, property } = _decorator;
 
@@ -12,6 +13,11 @@ export class GameControl extends Component {
     @property({
         type: prefr    })
     public ground: prefr;
+
+    @property({
+        type: Audio
+    })
+    public clip : Audio;
 
     @property({
         type: Bird
@@ -61,6 +67,7 @@ export class GameControl extends Component {
                 this.startGame();
             }else{
             this.bird.fly();
+            this.clip.onAudioQueue(0);
             }
         }
         , this)
@@ -90,6 +97,7 @@ export class GameControl extends Component {
 
         this.result.showResult();
         this.isOver = true;
+        this.clip.onAudioQueue(3);
         director.pause(); // dung man hinh game
     }
 
@@ -111,6 +119,7 @@ export class GameControl extends Component {
 
     passPipe(){
         this.result.addScore();
+        this.clip.onAudioQueue(1);
     }
     
     createPipe(){
@@ -128,12 +137,12 @@ export class GameControl extends Component {
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null){
 
         this.bird.hitSomething = true;
+        this.clip.onAudioQueue(2);
     }
 
     birdStruck(){
 
         this.contactGroundPipe();
-
         if(this.bird.hitSomething == true){
             this.gameOver();
         }
